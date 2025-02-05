@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reservaciones', function (Blueprint $table) {
+        Schema::create('permission_rols', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reservaciones');
+        Schema::dropIfExists('permission_rols');
     }
 };
