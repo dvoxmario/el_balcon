@@ -13,8 +13,15 @@ return new class extends Migration
     {
         Schema::create('permission_rols', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->foreignId('rol_id')  // aqui se define el nombre de la columna, llave foranea singular y termina en _id
+            ->constrained('rols')  //  nombre de la tabla de referencia.
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
 
+            $table->foreignId('permission_id')  // aqui se define el nombre de la columna, llave foranea singular y termina en _id
+            ->constrained('permissions')  //  nombre de la tabla de referencia.
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
 
 
 
