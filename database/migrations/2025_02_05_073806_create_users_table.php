@@ -12,25 +12,28 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_rols', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
-           
-            //relation
-            
-            $table->foreignId('user_id')
-            ->constrained('users')
+            $table->string('name');
+            $table->integer('identifiers');
+
+
+
+            //relations
+            $table->foreignId('identification_type_id')  // aqui se define el nombre de la columna, llave foranea singular y termina en _id
+            ->constrained('identification_types')  //  nombre de la tabla de referencia.
             ->onUpdate('cascade')
             ->onDelete('cascade');
 
-            
-            
-            $table->foreignId('rol_id')
-            ->constrained('rols')
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
-            
             $table->timestamps();
+            
+
+
+
         });
+
+       
+        
     }
 
     /**
@@ -38,6 +41,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_rols');
+        Schema::dropIfExists('users');
+      
     }
 };

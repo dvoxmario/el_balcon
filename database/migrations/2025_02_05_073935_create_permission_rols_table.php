@@ -13,8 +13,18 @@ return new class extends Migration
     {
         Schema::create('permission_rols', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+
+
+
+
+
+            //relations
+
             $table->timestamps();
+            
         });
+
     }
 
     /**
