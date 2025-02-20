@@ -16,6 +16,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('identifiers');
+            $table->integer('responsible_id');
+        
 
 
 
