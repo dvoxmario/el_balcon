@@ -2,21 +2,23 @@
 
 namespace App\Models;
 
+use App\Models\Pivots\VisitStatusOfficeVisit;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
-class Reservation extends Model
+class Visit_status extends Model
 {
     use HasFactory;
-    protected $table =  'visit_statuses';
-
-    
-
-    use HasFactory;
-    protected $table =  'visit_statuses';
+    protected $table =  'reservations';
 
     protected $fillable =  [
-        'name',
-        
-
-
+        'reservation_start_date',
+        'reservation_finish_date',
+        'check_in',
+        'check_out',
+        'user_id',
+        'responsible_id',
+        'room_id',
     ];
+}

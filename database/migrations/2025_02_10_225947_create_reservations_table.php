@@ -22,7 +22,7 @@ return new class extends Migration
 
             //relations
              
-            $table->foreignId('cliente_id')
+            $table->foreignId('user_id')
             ->constrained('users')  //  nombre de la tabla de referencia.
             ->onUpdate('cascade')
             ->onDelete('cascade');

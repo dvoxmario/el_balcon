@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
+use App\Models\Pivots\VisitStatusOfficeVisit;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
-class Permission extends Model
+class Visit_status extends Model
 {
+    use HasFactory;
     protected $table =  'permissions';
 
     protected $fillable =  [
         'name',
-      
+        
     ];
 }

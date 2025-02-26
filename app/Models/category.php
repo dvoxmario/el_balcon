@@ -10,12 +10,10 @@ use Illuminate\Support\Facades\DB;
 class Visit_status extends Model
 {
     use HasFactory;
-    protected $table =  'invoice_details';
+    protected $table =  'categories';
 
     protected $fillable =  [
         'name',
-        'value',
-        'invoice_id',
-        'product_id'
+        
     ];
 }

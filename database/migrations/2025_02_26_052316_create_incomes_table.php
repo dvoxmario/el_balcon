@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Invoice;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,18 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('incomes', function (Blueprint $table) {
             $table->id();
-            $table->integer('value');
+            $table->string('support');
+            $table->integer('total_price');
+            $table->integer('supplier');
 
 
-            $table->foreignId('reservation_id')
-            ->constrained('reservations')  //  nombre de la tabla de referencia.
+
+            //relations
+            $table->foreignId('stock_id')
+            ->constrained('stocks')  //  nombre de la tabla de referencia.
             ->onUpdate('cascade')
             ->onDelete('cascade');
 
-            $table->foreignId('invoice_state')
-            ->constrained('invoices')  //  nombre de la tabla de referencia.
+            $table->foreignId('responsible_id')
+            ->constrained('users')  //  nombre de la tabla de referencia.
             ->onUpdate('cascade')
             ->onDelete('cascade');
             $table->timestamps();
@@ -35,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('invoices');
+        Schema::dropIfExists('incomes');
     }
 };

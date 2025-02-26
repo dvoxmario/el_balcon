@@ -6,16 +6,16 @@ use App\Models\Pivots\VisitStatusOfficeVisit;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-
-class Visit_status extends Model
+class stock extends Model
 {
-    use HasFactory;
-    protected $table =  'invoice_details';
+    
+    protected $table =  'stocks';
 
     protected $fillable =  [
         'name',
-        'value',
-        'invoice_id',
-        'product_id'
+        'amount',
+        'product_id',
+        
     ];
+
 }
