@@ -2,20 +2,20 @@
 
 namespace App\Models;
 
-use App\Models\Pivots\VisitStatusOfficeVisit;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
-class Visit_status extends Model
+
+class PaymentMethod extends Model
 {
     use HasFactory;
-    protected $table =  'room_categories';
+    protected $table =  'payment_methods';
 
     protected $fillable =  [
         'name',
-        'description',
-        'price_id',
+        'relation',
+        'type',
         
     ];
 }

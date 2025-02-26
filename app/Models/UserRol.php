@@ -7,15 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Visit_status extends Model
+class UserRol extends Model
 {
     use HasFactory;
-    protected $table =  'invoice_payments';
+    protected $table =  'user_rols';
 
     protected $fillable =  [
         'name',
-        'relation',
-        'type',
-        
+        'rol_id',
+    
     ];
 }

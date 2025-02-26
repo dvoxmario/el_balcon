@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Visit_status extends Model
+class Room extends Model
 {
     use HasFactory;
     protected $table =  'rooms';
