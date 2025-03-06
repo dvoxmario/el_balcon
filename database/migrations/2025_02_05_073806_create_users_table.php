@@ -15,9 +15,9 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('identifiers');
-            $table->integer('responsible_id');
-        
+            $table->string('password')->nullable();
+            $table->string('identifiers')->unique();
+
 
 
 
@@ -28,14 +28,14 @@ return new class extends Migration
             ->onDelete('cascade');
 
             $table->timestamps();
-            
+
 
 
 
         });
 
-       
-        
+
+
     }
 
     /**
@@ -44,6 +44,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
-      
+
     }
 };

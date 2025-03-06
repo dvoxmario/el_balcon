@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('identification_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('value');
+            $table->enum('value',['numerico','alfanumerico']);
 
 
 
              //relations
 
              $table->timestamps();
-             
+
         });
     }
 

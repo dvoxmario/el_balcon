@@ -1,0 +1,26 @@
+version: '3.5'
+services:
+    balcon:
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        image: el-balcon:latest
+        container_name: balcon
+        restart: always
+        ports:
+          - 81:80
+        networks:
+            - network_privated
+            - mysql
+        volumes:
+            - './:/app/'
+
+networks:
+    network_privated:
+        driver: bridge
+
+    mysql:
+        driver: bridge
+        name: mysql
+        external: true
+
