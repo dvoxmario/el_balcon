@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Rol;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,25 @@ class RolSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $objetos=[
+
+            //Tipos de identificacion
+            [
+                'name'=> 'Admin',
+      
+            ],
+            [
+                'name'=> 'Cliente',
+               
+            ],
+
+        ];
+        foreach ($objetos as $key => $objeto){
+            Rol::create([
+                'name'=> $objeto['name'],
+             
+            ]);
+
+        }
     }
 }
