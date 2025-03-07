@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\InvoicePayment;
+use App\Models\InvoiceStatus;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,17 +13,13 @@ class InvoiceStatusSeeder extends Seeder
     {
        $objetos=[
             [
-                'name' => 'cash',
-                'relation' => 'Bancolombia',
-                'type' => 'credit',
+                'name' => 'factura abierta',
                 
     
                 
             ],
             [
-                'name' => 'credit',
-                'relation' => 'daviplata',
-                'type' => 'savings',
+                'name' => 'factura cancelada',
                 
                
             ],
@@ -30,10 +27,9 @@ class InvoiceStatusSeeder extends Seeder
            
         ];
         foreach ($objetos as $key => $objeto){
-            InvoicePayment::create([
+            InvoiceStatus::create([
                 'name'=> $objeto['name'],
-                'relation' => $objeto['relation'],
-                'type' => $objeto['type'],
+                
                 
                 
             ]);

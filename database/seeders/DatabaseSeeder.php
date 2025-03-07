@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             RoomCategorySeeder::class,
             RoomSeeder::class,
             PaymentMethodSeeder::class,
+            InvoiceStatusSeeder::class,
+            ReservationSeeder::class,
         ]);
     }
 }

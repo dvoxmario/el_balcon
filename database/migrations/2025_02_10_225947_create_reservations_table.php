@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->date('reservation_start_date');
-            $table->date('reserrvation_finish_date');
-            $table->date('check_in');
-            $table->date('check_out');
+            $table->date('reservation_finish_date');
+            $table->date('check_in')->nullable();
+            $table->date('check_out')->nullable();
+            $table->integer('number_occupants');
 
 
 
