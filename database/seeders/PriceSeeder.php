@@ -32,6 +32,30 @@ class PriceSeeder extends Seeder
                 'person_extra' => 10000,
              
             ],
+            [
+                'name' => 'Precio sin baño pareja',
+                'manual' => true,
+                'value' => 35000,
+                'person_extra' => 10000,
+             
+            ],
+        
+            [
+                'name' => 'Precio sin baño individual',
+                'manual' => true,
+                'value' => 25000,
+                'person_extra' => 10000,
+             
+            ],
+            [
+                'name' => 'Precio rato sin baño',
+                'manual' => true,
+                'value' => 15000,
+                'person_extra' => 10000,
+             
+            ],
+            
+
         ];
         foreach ($objetos as $key => $objeto){
             Price::create([

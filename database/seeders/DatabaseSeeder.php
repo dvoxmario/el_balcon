@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
             RolSeeder::class,
             UserRolSeeder::class,
             PriceSeeder::class,
+            RoomCategorySeeder::class,
+            RoomSeeder::class,
         ]);
     }
 }

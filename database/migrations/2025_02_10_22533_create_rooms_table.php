@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->integer('number_occupants');
             $table->integer('descripction_extra');
+            $table->integer('amount_occupants');
 
             //relation 
 
