@@ -17,7 +17,10 @@ return new class extends Migration
             $table->integer('total_price');
             $table->integer('supplier');
 
-
+            $table->foreignId('supplier_id')
+            ->constrained('users')  //  nombre de la tabla de referencia.
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
 
             //relations
             $table->foreignId('stock_id')

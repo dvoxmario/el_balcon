@@ -15,7 +15,7 @@ class Income extends Model
     protected $fillable =  [
         'support',
         'total_price',
-        'supplier',
+        'supplier_id',
         'stock_id',
         'responsible_id',
     ];
