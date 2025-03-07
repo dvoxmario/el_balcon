@@ -2,20 +2,20 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Stock extends Model
+class Price extends Model
 {
-    
-    protected $table =  'stocks';
+    use HasFactory;
+    protected $table =  'prices';
 
     protected $fillable =  [
         'name',
-        'amount',
-        'product_id',
-        
+        'manual',
+        'value',
+        'person_extra'
     ];
-
 }

@@ -7,15 +7,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Price extends Model
+class Income extends Model
 {
     use HasFactory;
-    protected $table =  'prices';
+    protected $table =  'incomes';
 
     protected $fillable =  [
-        'name',
-        'manual',
-        'value',
-        'person_extra'
+        'support',
+        'total_price',
+        'supplier_id',
+        'stock_id',
+        'responsible_id',
     ];
 }

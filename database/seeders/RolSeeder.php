@@ -18,18 +18,22 @@ class RolSeeder extends Seeder
             //Tipos de identificacion
             [
                 'name'=> 'Admin',
-      
+
             ],
             [
                 'name'=> 'Cliente',
-               
+
+            ],
+            [
+                'name'=> 'Proveedor',
+
             ],
 
         ];
         foreach ($objetos as $key => $objeto){
             Rol::create([
                 'name'=> $objeto['name'],
-             
+
             ]);
 
         }
