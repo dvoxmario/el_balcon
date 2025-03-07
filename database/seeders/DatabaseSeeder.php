@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             PriceSeeder::class,
             RoomCategorySeeder::class,
             RoomSeeder::class,
+            PaymentMethodSeeder::class,
         ]);
     }
 }
