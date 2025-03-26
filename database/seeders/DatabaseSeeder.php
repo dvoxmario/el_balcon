@@ -26,6 +26,9 @@ class DatabaseSeeder extends Seeder
             PaymentMethodSeeder::class,
             InvoiceStatusSeeder::class,
             ReservationSeeder::class,
+            CategorySeeder::class,
+            ProductSeeder::class,
+            StockSeeder::class,
         ]);
     }
 }
