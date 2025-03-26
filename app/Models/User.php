@@ -29,6 +29,24 @@ class User extends Authenticatable
 
     ];
 
+    //relaciones
+
+    function identificationTypes() {
+        return $this->belongsTo(IdentificationType::class, 'identification_type_id');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The attributes that should be hidden for serialization.
      *
