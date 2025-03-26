@@ -16,4 +16,17 @@ class Rol extends Model
         'name',
       
     ];
+
+
+    public function userRols()
+    {
+        return $this->hasMany(UserRol::class);
+    }
+
+
+    public function rolPermisions()
+    {
+        return $this->hasMany(PermissionRol::class);
+    }
+
 }

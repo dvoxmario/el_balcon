@@ -34,6 +34,19 @@ class User extends Authenticatable
     function identificationTypes() {
         return $this->belongsTo(IdentificationType::class, 'identification_type_id');
     }
+    
+
+    public function userRols()
+    {
+        return $this->hasMany(UserRol::class);
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
+    
 
 
 

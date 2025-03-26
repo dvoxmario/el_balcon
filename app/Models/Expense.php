@@ -15,7 +15,18 @@ class Expense extends Model
     protected $fillable =  [
         'support',
         'stock_id',
-        'responsible_id',
+        'user_id',
         
     ];
+
+    function stocks() {
+        return $this->belongsTo(Stock::class, 'stock_id');
+    }
+
+
+    public function expenseDetails()
+    {
+        return $this->hasMany(ExpenseDetail::class);
+    }
+    
 }

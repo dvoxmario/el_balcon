@@ -14,4 +14,25 @@ class Invoice extends Model
         'invoice_state',
         
     ];
+
+    function reservations() {
+        return $this->belongsTo(Reservation::class, 'reservation_id');
+    }
+
+
+    public function invoicePayments()
+    {
+        return $this->hasMany(InvoicePayment::class);
+    }
+
+
+    public function invoiceDetails()
+    {
+        return $this->hasMany(InvoiceDetail::class);
+    }
+
+    function invoiceStatus() {
+        return $this->belongsTo(InvoiceStatus::class, 'invoice_state');
+    }
+
 }

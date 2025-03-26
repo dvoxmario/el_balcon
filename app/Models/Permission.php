@@ -16,4 +16,9 @@ class Permission extends Model
         'name',
         
     ];
+
+    public function rolPermisions()
+    {
+        return $this->hasMany(PermissionRol::class);
+    }
 }

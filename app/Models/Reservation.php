@@ -22,4 +22,20 @@ class Reservation extends Model
         'responsible_id',
         'room_id',
     ];
+
+    function rooms() {
+        return $this->belongsTo(Room::class, 'room_id');
+    }
+
+    
+    function users() {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
 }

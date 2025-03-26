@@ -17,4 +17,18 @@ class Stock extends Model
 
     ];
 
+    function products() {
+        return $this->hasOne(Product::class, 'product_id');
+    }
+
+    public function incomes()
+    {
+        return $this->hasMany(Income::class);
+    }
+
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class);
+    }
+
 }

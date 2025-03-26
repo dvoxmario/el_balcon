@@ -18,4 +18,12 @@ class InvoicePayment extends Model
         'type',
         
     ];
+
+    function paymentMethods() {
+        return $this->belongsTo(PaymentMethod::class, 'paymentMethod_id');
+    }
+
+    function invoices() {
+        return $this->belongsTo(Invoice::class, 'invoicePayment_id');
+    }
 }

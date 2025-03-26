@@ -18,4 +18,10 @@ class Price extends Model
         'value',
         'person_extra'
     ];
+
+    public function roomCategory()
+    {
+        return $this->hasMany(RoomCategory::class);
+    }
+
 }

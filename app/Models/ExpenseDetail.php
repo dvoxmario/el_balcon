@@ -18,4 +18,13 @@ class ExpenseDetail extends Model
         'product_id',
         
     ];
+
+    function products() {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
+
+    function expenses() {
+        return $this->belongsTo(Expense::class, 'expense_id');
+    }
+    
 }

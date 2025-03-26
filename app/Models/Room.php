@@ -18,4 +18,13 @@ class Room extends Model
         'number',
         'room_category_id'
     ];
+
+    function roomCategory() {
+        return $this->belongsTo(RoomCategory::class, 'room_category');
+    }
+    
+    public function reservation()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }

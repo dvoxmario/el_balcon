@@ -19,4 +19,14 @@ class Income extends Model
         'stock_id',
         'responsible_id',
     ];
+
+    function stocks() {
+        return $this->belongsTo(Stock::class, 'stock_id');
+    }
+
+    
+    public function incomeDetails()
+    {
+        return $this->hasMany(IncomeDetail::class);
+    }
 }

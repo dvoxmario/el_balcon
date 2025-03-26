@@ -18,4 +18,15 @@ class RoomCategory extends Model
         'price_id',
         
     ];
+
+    public function rooms()
+    {
+        return $this->hasMany(Room::class);
+    }
+
+    function prices() {
+        return $this->belongsTo(Price::class, 'price_id');
+    }
+
+    
 }

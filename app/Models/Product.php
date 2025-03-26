@@ -19,4 +19,29 @@ class Product extends Model
         
     ];
 
+    public function invoiceDetails()
+    {
+        return $this->hasMany(InvoiceDetail::class);
+    }
+
+    public function stocks()
+    {
+        return $this->belongsTo(Stock::class);
+    }
+
+    public function incomeDetails()
+    {
+        return $this->hasMany(IncomeDetail::class);
+    }
+
+    public function expenseDetails()
+    {
+        return $this->hasMany(ExpenseDetail::class);
+    }
+
+    function categorys() {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+
 }

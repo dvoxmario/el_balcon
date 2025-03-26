@@ -18,4 +18,9 @@ class PaymentMethod extends Model
         'type',
         
     ];
+
+    public function invoicePayments()
+    {
+        return $this->hasMany(InvoicePayment::class);
+    }
 }
