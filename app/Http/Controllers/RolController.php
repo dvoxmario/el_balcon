@@ -26,7 +26,7 @@ class RolController extends Controller
             $query->where('name', 'like', '%' . $request->search . '%');
         }
 
-        $this->response['data'] = $query->get();
+        $this->response['data'] = $query->with('userRols', 'rolPermisions')->get();//se cargan las relaciones 
         return response()->json($this->response, 200);
     }
 
@@ -35,13 +35,13 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
-        // Validación de la entrada
+        // Validación de los datos 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
         ]);
 
         try {
-            // Crear el rol
+            
             $rol = Rol::create($validated);
 
             $this->response['data'] = $rol;
@@ -60,12 +60,12 @@ class RolController extends Controller
     public function show($id)
     {
         try {
-            $rol = Rol::findOrFail($id); // Lanza una excepción si no se encuentra el rol
+            $rol = Rol::with('userRols', 'rolPermissions')->findOrFail($id); // se carga relaciones
 
             $this->response['data'] = $rol;
             return response()->json($this->response, 200);
         } catch (\Exception $e) {
-            // En caso de no encontrar el rol
+            
             $this->response['status'] = 'error';
             $this->response['message'] = 'Rol no encontrado';
             return response()->json($this->response, 404); // Código 404 para no encontrado
@@ -84,22 +84,16 @@ class RolController extends Controller
 
         try {
             $rol = Rol::findOrFail($id); // Lanza una excepción si no se encuentra el rol
-
-            // Actualizar los datos del rol
             $rol->update($validated);
+            $this->response['data']= $rol;
+            return response()->json($this->response,200);//codigo 200 para ser actualizado
 
-            $this->response['data'] = $rol;
-            return response()->json($this->response, 200);
+
         } catch (QueryException $e) {
             // En caso de error en la base de datos
             $this->response['status'] = 'error';
             $this->response['message'] = 'Error al actualizar el rol: ' . $e->getMessage();
             return response()->json($this->response, 500);
-        } catch (\Exception $e) {
-            // En caso de no encontrar el rol
-            $this->response['status'] = 'error';
-            $this->response['message'] = 'Rol no encontrado';
-            return response()->json($this->response, 404); // Código 404 para no encontrado
         }
     }
 
