@@ -16,33 +16,33 @@ class UserController extends Controller
     ];
 
 
-    public function index(Request $request)
+    public function index()
     {
         $query = User::query();
 
 
         // Busqueda basica por nombre o identificador
-        if ($request->has('search') && $request->search !='') {
-            $query->where('name', 'like', '%' . $request->search . '%')
-                ->orwhere('identifiers','like', '%' . $request->search . '%');
+        // if ($request->has('search') && $request->search !='') {
+        //     $query->where('name', 'like', '%' . $request->search . '%')
+        //         ->orwhere('identifiers','like', '%' . $request->search . '%');
 
-        }
-        $this->response['data'] = $query->whit('identificationTypes','userRols','reservations')->get();
+        // }
+        $this->response['data'] = $query->with('identificationTypes','userRols','reservations')->get();
 
         return response()->json($this->response, 200);
     }
-    
+
     public function store(Request $request)
     {
         //vallidacion
-      $validated = $request->validate([
+    //   $validated = $request->validate([
 
-        'name' => 'required|string|max:255',
-        'identifiers' => 'required|string|max:255',
-        'password' => 'required|string|min:8',
-        'identification_type_id' => 'required|exists:identification_types,id',
+    //     'name' => 'required|string|max:255',
+    //     'identifiers' => 'required|string|max:255',
+    //     'password' => 'required|string|min:8',
+    //     'identification_type_id' => 'required|exists:identification_types,id',
 
-        ]);
+    //     ]);
 
         try {
         //crear un nuevo usuario
@@ -53,7 +53,7 @@ class UserController extends Controller
         $user->save();
 
         $this->response['data']= $user;
-        return response()->json($this->response, 201); //codigo de creado 
+        return response()->json($this->response, 201); //codigo de creado
 
         }
 
@@ -64,7 +64,7 @@ class UserController extends Controller
 
          }
 
-      
+
     }
 
     public function show($id)
@@ -74,7 +74,7 @@ class UserController extends Controller
             $this->response['data'] = $user;
             return response()->json($this->response, 200);
 
-        } 
+        }
         catch (\Exception $e) {
             $this->response['status'] = 'error';
             $this->response['message'] = 'user not found';
@@ -87,20 +87,20 @@ class UserController extends Controller
      public function update(Request $request, $id)
      {
         //validacion
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'identifiers' => 'required|string|max:255',
-            'password' => 'nullable|string|min:8',
-            'identification_type_id' => 'required|exists:identification_types,id',
+        // $validated = $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'identifiers' => 'required|string|max:255',
+        //     'password' => 'nullable|string|min:8',
+        //     'identification_type_id' => 'required|exists:identification_types,id',
 
-        ]);
+        // ]);
 
             try{
                  $user = User::findOrFail($id);
 
                 //Actualizar la informacion del usuario
-                $user->update($validated);
-            
+                // $user->update($validated);
+
 
                 // si se proporciona nueva contraseña, se actualiza
                 if($request->has('password')) {
@@ -118,20 +118,20 @@ class UserController extends Controller
             catch(QueryException $e) {
                 $this->response['status'] = 'error';
                 $this->response['message'] = 'Database error: ' . $e->getMessage();
-                return response()->json($this->response, 500); //error en la base de datos 
+                return response()->json($this->response, 500); //error en la base de datos
 
             }
-    }    
+    }
 
     public function destroy($id)
     {
-        try{ 
+        try{
             $user = User::findOrFail($id);
             $user->delete();
 
             $this->response['data']=$user;
             return response()->json($this->response, 200); //codigo 200 eliminado
-        }   
+        }
         catch (\Exception $e) {
 
         $this->response['status'] = 'error';
@@ -141,11 +141,11 @@ class UserController extends Controller
          }
     }
 }
-        
-
-        
 
 
-    
-    
+
+
+
+
+
 
