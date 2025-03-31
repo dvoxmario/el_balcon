@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     private $response = [
         'status' => 'ok',
-        'message' => null,
+        'message' => 'null',
         'data' => []
 
     ];
@@ -27,125 +27,117 @@ class UserController extends Controller
         //         ->orwhere('identifiers','like', '%' . $request->search . '%');
 
         // }
-        $this->response['data'] = $query->with('identificationTypes','userRols','reservations')->get();
+        $this->response['data'] = $query->get();
+        return response()->json($this->response, 200);
+    }
+    public function create()
+    {
+        //
+    }
+
+    public function store(Request $request) //recibe un post , recibe solo body , crea un objeto
+    {
+        try {
+			$user = User::create([
+				'name' => $request['name'],
+				'identifiers' => $request['identifiers'],
+                'password' => $request['password'],
+                'identification_type' => $request['identification_type'],
+
+			]);
+
+
+			if (!$user) {
+				$this->response['status'] = 'error';
+                $this->response['message'] = 'no se Creo el usuario';
+                return response()->json($this->response, 500);
+			}
+
+		} catch (QueryException $e) {
+			return $this->response['message'] = $e->getMessage();
+		}
+
+        $this->response['data'] = $user;
 
         return response()->json($this->response, 200);
     }
 
-    public function store(Request $request)
+    /**
+     * Display the specified resource.
+     */
+    public function show($id) // consulta un solo objeto, solo get con el id en la url
     {
-        //vallidacion
-    //   $validated = $request->validate([
-
-    //     'name' => 'required|string|max:255',
-    //     'identifiers' => 'required|string|max:255',
-    //     'password' => 'required|string|min:8',
-    //     'identification_type_id' => 'required|exists:identification_types,id',
-
-    //     ]);
-
-        try {
-        //crear un nuevo usuario
-        $user = User::create($validated);
-
-        //hash de la contraseña antes de guardar
-        $user->password = bcrypt($request->password);
-        $user->save();
-
-        $this->response['data']= $user;
-        return response()->json($this->response, 201); //codigo de creado
-
+        $user = User::find($id);
+        if(!$user)
+        {
+            $this->response['status'] = 'error';
+            $this->response['message'] = 'no se encontro el tipo de identificación';
+            return response()->json($this->response, 400);
         }
 
-        catch (QueryException $e) {
-            $this->response['status'] = 'error';
-            $this->response['message'] = 'Database error: ' . $e->getMessage();
-            return response()->json($this->response, 500);
-
-         }
-
-
+        $this->response['data'] = $user;
+        return response()->json($this->response, 200);
     }
 
-    public function show($id)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(User $user)
     {
-        try{
-            $user = User::with('identificationTypes', 'userRols', 'reservations')->findOrFail($id);
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id) // post , recibe body y id en la url
+    {
+        try {
+
+            $user = User::find($id);
+
+            if (!$user) {
+                $this->response['status'] = 'error';
+                $this->response['message'] = 'no se encontro el tipo de identificacion';
+                return response()->json($this->response, 400);
+            }
+
+			$user->update([
+				'name' => $request['name'],
+				'value' => $request['value'],
+			]);
+
+
+		} catch (QueryException $e) {
+			return $this->response['message'] = $e->getMessage();
+		}
+
+        $this->response['data'] = $user;
+
+        return response()->json($this->response, 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id) //post , recibe solo id en la url
+    {
+        $user = User::find($id);
+
+        if(!$user){
+            $this->response['status'] = 'error';
+            $this->response['message'] = 'No se ha encontrado el usuario';
+            return response()->json($this->response, 400);
+        }
+
+        if($user->delete()){
             $this->response['data'] = $user;
             return response()->json($this->response, 200);
-
         }
-        catch (\Exception $e) {
+        else{
             $this->response['status'] = 'error';
-            $this->response['message'] = 'user not found';
-            return response()->json($this->response, 404); //codigo si no se encuentra el usuario
-
-          }
-
-     }
-
-     public function update(Request $request, $id)
-     {
-        //validacion
-        // $validated = $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'identifiers' => 'required|string|max:255',
-        //     'password' => 'nullable|string|min:8',
-        //     'identification_type_id' => 'required|exists:identification_types,id',
-
-        // ]);
-
-            try{
-                 $user = User::findOrFail($id);
-
-                //Actualizar la informacion del usuario
-                // $user->update($validated);
-
-
-                // si se proporciona nueva contraseña, se actualiza
-                if($request->has('password')) {
-                $user->password = bcrypt($request->password);
-
-                }
-
-                $user->save();
-
-                $this->response['data'] = $user;
-                return response()->json($this->response, 200); //codigo 200 para actualizado
-
-            }
-
-            catch(QueryException $e) {
-                $this->response['status'] = 'error';
-                $this->response['message'] = 'Database error: ' . $e->getMessage();
-                return response()->json($this->response, 500); //error en la base de datos
-
-            }
-    }
-
-    public function destroy($id)
-    {
-        try{
-            $user = User::findOrFail($id);
-            $user->delete();
-
-            $this->response['data']=$user;
-            return response()->json($this->response, 200); //codigo 200 eliminado
+            $this->response['message'] = 'No se ha eliminado el usuario';
+            return response()->json($this->response, 400);
         }
-        catch (\Exception $e) {
-
-        $this->response['status'] = 'error';
-        $this->response['message'] = 'User not found or deletion failed';
-        return response()->json($this->response,404); //error si no se encuentra el usuario
-
-         }
     }
 }
-
-
-
-
-
-
-
-

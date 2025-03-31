@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\User_rol;
 use App\Models\UserRol;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -26,7 +24,7 @@ class UserRolController extends Controller
 
 
     $this->response['data'] = $query->get();
-    return response()->json($this->response, 2000);
+    return response()->json($this->response, 200);
     }
     public function create()
     {
@@ -40,7 +38,7 @@ class UserRolController extends Controller
     {
         try {
             $UserRol = UserRol::create([
-                'name' => $request['name'],
+                'user_id' => $request['user_id'],
                 'rol_id' => $request['rol_id'],
 
             ]);
@@ -50,8 +48,8 @@ class UserRolController extends Controller
                 $this->response['message'] = 'no se creo el tipo de Rol';
             }
 
-        } catch(QueryException $e){
-            return response()->json($this->response, 500);
+        } catch (QueryException $e) {
+			return $this->response['message'] = $e->getMessage();
         }
 
         $this->response['data'] = $UserRol;
@@ -92,7 +90,7 @@ class UserRolController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $UserRol = $UserRol::find($id);
+            $UserRol = UserRol::find($id);
 
             if(!$UserRol) {
                 $this->response['status'] = 'error';
@@ -102,7 +100,7 @@ class UserRolController extends Controller
 
             }
             $UserRol->update([
-                'name' => $request['name'],
+                'user_id' => $request['user_id'],
                 'rol_id'=>$request['rol_id'],
             ]);
             

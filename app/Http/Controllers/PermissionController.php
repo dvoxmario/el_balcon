@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permission;
-use App\Models\Rol;
+use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller
@@ -19,8 +20,9 @@ class PermissionController extends Controller
      */
     public function index()
     {
+        $query = Permission::query();
         // Obtener todos los permisos
-        $this->response['data'] = Permission::all();
+        $this->response['data'] = $query->get();
         return response()->json($this->response, 200);  // Código 200 para éxito
     }
 
@@ -29,24 +31,28 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        // Validar la entrada
-        $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:permissions,name',
-        ]);
-
         try {
-            // Crear el permiso
-            $permission = Permission::create($validated);
+			$permission = Permission::create([
+				'name' => $request['name'],
+			
 
-            $this->response['data'] = $permission;
-            return response()->json($this->response, 201);  // 201 para recurso creado
-        } catch (\Exception $e) {
-            $this->response['status'] = 'error';
-            $this->response['message'] = 'Error creating permission: ' . $e->getMessage();
-            return response()->json($this->response, 500);  // Código 500 para error interno
-        }
+			]);
+
+
+			if (!$permission) {
+				$this->response['status'] = 'error';
+                $this->response['message'] = 'no se Creo el permiso';
+                return response()->json($this->response, 500);
+			}
+
+		} catch (QueryException $e) {
+			return $this->response['message'] = $e->getMessage();
+		}
+
+        $this->response['data'] = $permission;
+
+        return response()->json($this->response, 200);
     }
-
     /**
      * Assign a permission to a role.
      */

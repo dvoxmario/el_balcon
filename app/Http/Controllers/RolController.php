@@ -17,104 +17,116 @@ class RolController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+
+    public function index()
     {
         $query = Rol::query();
 
-        // Filtro opcional de búsqueda
-        if ($request->has('search') && $request->search != '') {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        }
 
-        $this->response['data'] = $query->with('userRols', 'rolPermisions')->get();//se cargan las relaciones 
+        // Busqueda basica por nombre o identificador
+        // if ($request->has('search') && $request->search !='') {
+        //     $query->where('name', 'like', '%' . $request->search . '%')
+        //         ->orwhere('identifiers','like', '%' . $request->search . '%');
+
+        // }
+        $this->response['data'] = $query->get();
         return response()->json($this->response, 200);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request) //recibe un post , recibe solo body , crea un objeto
     {
-        // Validación de los datos 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
-
         try {
-            
-            $rol = Rol::create($validated);
+			$rol = Rol::create([
+				'name' => $request['name'],
+				
+			]);
 
-            $this->response['data'] = $rol;
-            return response()->json($this->response, 201); // Código 201 para recursos creados
-        } catch (QueryException $e) {
-            // En caso de error en la base de datos
-            $this->response['status'] = 'error';
-            $this->response['message'] = 'Error al crear el rol: ' . $e->getMessage();
-            return response()->json($this->response, 500); // Código 500 para errores internos
-        }
+
+			if (!$rol) {
+				$this->response['status'] = 'error';
+                $this->response['message'] = 'no se Creo el usuario';
+                return response()->json($this->response, 500);
+			}
+
+		} catch (QueryException $e) {
+			return $this->response['message'] = $e->getMessage();
+		}
+
+        $this->response['data'] = $rol;
+
+        return response()->json($this->response, 200);
     }
+
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($id) // consulta un solo objeto, solo get con el id en la url
     {
-        try {
-            $rol = Rol::with('userRols', 'rolPermissions')->findOrFail($id); // se carga relaciones
-
-            $this->response['data'] = $rol;
-            return response()->json($this->response, 200);
-        } catch (\Exception $e) {
-            
+        $rol = Rol::find($id);
+        if(!$rol)
+        {
             $this->response['status'] = 'error';
-            $this->response['message'] = 'Rol no encontrado';
-            return response()->json($this->response, 404); // Código 404 para no encontrado
+            $this->response['message'] = 'no se encontro el tipo de identificación';
+            return response()->json($this->response, 400);
         }
+
+        $this->response['data'] = $rol;
+        return response()->json($this->response, 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id)
+    
+    public function update(Request $request, $id) // post , recibe body y id en la url
     {
-        // Validación de la entrada
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
-
         try {
-            $rol = Rol::findOrFail($id); // Lanza una excepción si no se encuentra el rol
-            $rol->update($validated);
-            $this->response['data']= $rol;
-            return response()->json($this->response,200);//codigo 200 para ser actualizado
+
+            $rol = Rol::find($id);
+
+            if (!$rol) {
+                $this->response['status'] = 'error';
+                $this->response['message'] = 'no se encontro el tipo de rol';
+                return response()->json($this->response, 400);
+            }
+
+			$rol->update([
+				'name' => $request['name'],
+				'value' => $request['value'],
+			]);
 
 
-        } catch (QueryException $e) {
-            // En caso de error en la base de datos
-            $this->response['status'] = 'error';
-            $this->response['message'] = 'Error al actualizar el rol: ' . $e->getMessage();
-            return response()->json($this->response, 500);
-        }
+		} catch (QueryException $e) {
+			return $this->response['message'] = $e->getMessage();
+		}
+
+        $this->response['data'] = $rol;
+
+        return response()->json($this->response, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($id) //post , recibe solo id en la url
     {
-        try {
-            $rol = Rol::findOrFail($id); // Lanza una excepción si no se encuentra el rol
+        $rol = Rol::find($id);
 
-            // Eliminar el rol
-            $rol->delete();
+        if(!$rol){
+            $this->response['status'] = 'error';
+            $this->response['message'] = 'No se ha encontrado el rol';
+            return response()->json($this->response, 400);
+        }
 
+        if($rol->delete()){
             $this->response['data'] = $rol;
             return response()->json($this->response, 200);
-        } catch (\Exception $e) {
-            // En caso de error en la base de datos o si no se encuentra el rol
+        }
+        else{
             $this->response['status'] = 'error';
-            $this->response['message'] = 'Error al eliminar el rol: ' . $e->getMessage();
-            return response()->json($this->response, 500); // Código 500 para error interno
+            $this->response['message'] = 'No se ha eliminado el rol';
+            return response()->json($this->response, 400);
         }
     }
 }
