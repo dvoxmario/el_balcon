@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->integer('value');
+            $table->bigInteger('value');
 
 
             $table->foreignId('reservation_id')
@@ -22,7 +22,7 @@ return new class extends Migration
             ->onUpdate('cascade')
             ->onDelete('cascade');
 
-            $table->foreignId('invoice_state')
+            $table->foreignId('invoice_state_id')
             ->constrained('invoices')  //  nombre de la tabla de referencia.
             ->onUpdate('cascade')
             ->onDelete('cascade');

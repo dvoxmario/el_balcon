@@ -11,7 +11,7 @@ class Invoice extends Model
     protected $fillable =  [
         'value',
         'reservation_id',
-        'invoice_state',
+        'invoice_state_id',
         
     ];
 
@@ -32,7 +32,7 @@ class Invoice extends Model
     }
 
     function invoiceStatus() {
-        return $this->belongsTo(InvoiceStatus::class, 'invoice_state');
+        return $this->belongsTo(InvoiceStatus::class, 'invoice_state_id');
     }
 
 }

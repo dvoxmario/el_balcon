@@ -88,7 +88,7 @@ class RoomController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, room $room)
+    public function update(Request $request, room $room,$id)
     {
         try {
 
@@ -101,7 +101,7 @@ class RoomController extends Controller
             }
 
 			$room->update([
-				'number_occupants' =>request('name'),
+				'number_occupants' =>request('number_occupants'),
                  'descripcion_extra' => request('descripcion_extra'),
                 'number' => request('number'),
                 'room_category_id' => request('room_category_id'),

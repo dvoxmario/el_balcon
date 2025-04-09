@@ -32,7 +32,7 @@ class User extends Authenticatable
     //relaciones
 
     function identificationTypes() {
-        return $this->belongsTo(IdentificationType::class, 'identification_type_id');
+        return $this->belongsTo(IdentificationType::class);
     }
     
 

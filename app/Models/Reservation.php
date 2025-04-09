@@ -18,7 +18,7 @@ class Reservation extends Model
         'number_occupants',
         'check_in',
         'check_out',
-        'user_id',
+        'client_id',
         'responsible_id',
         'room_id',
     ];
@@ -28,10 +28,13 @@ class Reservation extends Model
     }
 
     
-    function users() {
-        return $this->belongsTo(User::class, 'user_id');
+    function clients() {
+        return $this->belongsTo(User::class, 'client_id');
     }
 
+    function responsibles() {
+        return $this->belongsTo(User::class, 'responsible_id');
+    }
 
     public function invoices()
     {

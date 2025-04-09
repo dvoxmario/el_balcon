@@ -12,7 +12,7 @@ class ReservationSeeder extends Seeder
     {
        $objetos=[
             [
-                'user_id' => 1,
+                'client_id' => 1,
                 'responsible_id' => 1,
                 'reservation_start_date' => '2025-03-07',
                 'reservation_finish_date' => '2025-03-07',
@@ -25,7 +25,7 @@ class ReservationSeeder extends Seeder
                 
             ],
             [
-                'user_id' => 3,
+                'client_id' => 3,
                 'responsible_id' => 1,
                 'reservation_start_date' => '2025-03-07',
                 'reservation_finish_date' => '2025-03-07',
@@ -38,7 +38,7 @@ class ReservationSeeder extends Seeder
         ];
         foreach ($objetos as $key => $objeto){
             Reservation::create([
-                'user_id' => $objeto['user_id'],
+                'client_id' => $objeto['client_id'],
                 'responsible_id' => $objeto['responsible_id'],
                 'number_occupants' => $objeto['number_occupants'],
                 'reservation_start_date' => $objeto['reservation_start_date'],

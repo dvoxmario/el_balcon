@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Room;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,7 +14,7 @@ class InvoiceSeeder extends Seeder
             [
                 'reservation_id' => '10',
                 'invoice_status_id' => '1',
-                'value' => '20000',
+                'value' => 20000,
                 
     
                 
