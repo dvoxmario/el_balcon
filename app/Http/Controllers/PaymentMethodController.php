@@ -3,16 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment_method;
+use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class PaymentMethodController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    private $response = [
+        'status' => 'ok',
+        'message' => 'null',
+        'data' => []
+    ];
     public function index()
     {
-        //
+        $query = PaymentMethod::query();
+
+
+
+
+        $this->response['data'] = $query->get();
+        return response()->json($this->response, 200);
     }
 
     /**
@@ -28,15 +38,46 @@ class PaymentMethodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+			$paymentMethod = PaymentMethod::create([
+				'name' => $request['name'],
+				'relation' => $request['relation'],
+                'type' => $request['type'],
+                
+
+			]);
+
+
+			if (!$paymentMethod) {
+				$this->response['status'] = 'error';
+                $this->response['message'] = 'no se Creo el metodo de pago';
+                return response()->json($this->response, 500);
+			}
+
+		} catch (QueryException $e) {
+			return $this->response['message'] = $e->getMessage();
+		}
+
+        $this->response['data'] = $paymentMethod;
+
+        return response()->json($this->response, 200);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Payment_method $payment_method)
+    public function show($id)
     {
-        //
+        $paymentMethod = PaymentMethod::find($id);
+        if(!$paymentMethod)
+        {
+            $this->response['status'] = 'error';
+            $this->response['message'] = 'no se encontro el tipo de pago';
+            return response()->json($this->response, 400);
+        }
+
+        $this->response['data'] = $paymentMethod;
+        return response()->json($this->response, 200);
     }
 
     /**
@@ -50,9 +91,31 @@ class PaymentMethodController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Payment_method $payment_method)
+    public function update(Request $request, $id);
     {
-        //
+        try {
+
+            $user = User::find($id);
+
+            if (!$user) {
+                $this->response['status'] = 'error';
+                $this->response['message'] = 'no se encontro el tipo de identificacion';
+                return response()->json($this->response, 400);
+            }
+
+			$user->update([
+				'name' => $request['name'],
+				'value' => $request['value'],
+			]);
+
+
+		} catch (QueryException $e) {
+			return $this->response['message'] = $e->getMessage();
+		}
+
+        $this->response['data'] = $user;
+
+        return response()->json($this->response, 200);
     }
 
     /**
