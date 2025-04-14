@@ -83,7 +83,7 @@ class PaymentMethodController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Payment_method $payment_method)
+    public function edit($paymentMethod )
     {
         //
     }
@@ -91,21 +91,22 @@ class PaymentMethodController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id);
+    public function update(Request $request, $id)
     {
         try {
 
-            $user = User::find($id);
+            $paymentMethod = PaymentMethod::find($id);
 
-            if (!$user) {
+            if (!$paymentMethod) {
                 $this->response['status'] = 'error';
-                $this->response['message'] = 'no se encontro el tipo de identificacion';
+                $this->response['message'] = 'no se encontro el metodo de pago';
                 return response()->json($this->response, 400);
             }
 
-			$user->update([
+			$paymentMethod->update([
 				'name' => $request['name'],
-				'value' => $request['value'],
+				'relation' => $request['relation'],
+                'type' => $request['type'],
 			]);
 
 
@@ -113,7 +114,7 @@ class PaymentMethodController extends Controller
 			return $this->response['message'] = $e->getMessage();
 		}
 
-        $this->response['data'] = $user;
+        $this->response['data'] = $paymentMethod;
 
         return response()->json($this->response, 200);
     }
@@ -121,8 +122,24 @@ class PaymentMethodController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Payment_method $payment_method)
+    public function destroy( $id)
     {
-        //
+        $paymentMethod = PaymentMethod::find($id);
+
+        if(!$paymentMethod){
+            $this->response['status'] = 'error';
+            $this->response['message'] = 'No se ha encontrado el metodo de pago';
+            return response()->json($this->response, 400);
+        }
+
+        if($paymentMethod->delete()){
+            $this->response['data'] = $paymentMethod;
+            return response()->json($this->response, 200);
+        }
+        else{
+            $this->response['status'] = 'error';
+            $this->response['message'] = 'No se ha eliminado el metodo de pago';
+            return response()->json($this->response, 400);
+        }
     }
 }

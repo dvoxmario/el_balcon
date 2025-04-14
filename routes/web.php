@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\IdentificationTypeController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\InvoiceDetailController;
+use App\Http\Controllers\InvoicePaymentController;
 use App\Http\Controllers\InvoiceStatusController;
+use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RolController;
@@ -10,6 +13,7 @@ use App\Http\Controllers\RoomCategoryController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserRolController;
+use App\Models\PaymentMethod;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +29,6 @@ Route::apiResource('roomC', RoomCategoryController::class);
 Route::apiResource('Room', RoomController::class);
 Route::apiResource('invoiceStatus', InvoiceStatusController::class);
 Route::apiResource('invoice', InvoiceController::class);
-Route::apiResource('reservation', ReservationController::class);
+Route::apiResource('paymentMethod', PaymentMethodController::class);
+Route::apiResource('invoicePayment', InvoicePaymentController::class);
+Route::apiResource('invoiceDetail', InvoiceDetailController::class);

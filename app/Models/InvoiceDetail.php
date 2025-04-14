@@ -14,7 +14,7 @@ class InvoiceDetail extends Model
 
     protected $fillable =  [
         'name',
-        'value',
+        'value_id',
         'invoice_id',
         'product_id'
     ];
@@ -25,5 +25,9 @@ class InvoiceDetail extends Model
 
     function products() {
         return $this->belongsTo(Product::class, 'product_id');
+    }
+
+    function values() {
+        return $this->belongsTo(Invoice::class, 'value_id');
     }
 }

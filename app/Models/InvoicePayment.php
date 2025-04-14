@@ -13,9 +13,9 @@ class InvoicePayment extends Model
     protected $table =  'invoice_payments';
 
     protected $fillable =  [
-        'name',
-        'relation',
-        'type',
+        'invoice_id',
+        'paymentMethod_id',
+        'value_id',
         
     ];
 
@@ -24,6 +24,11 @@ class InvoicePayment extends Model
     }
 
     function invoices() {
-        return $this->belongsTo(Invoice::class, 'invoicePayment_id');
+        return $this->belongsTo(Invoice::class, 'invoice_id');
     }
+
+    function values () {
+        return $this->belongsTo(Invoice::class, 'value_id');
+
+    }    
 }

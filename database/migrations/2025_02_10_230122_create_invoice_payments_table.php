@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('invoice_payments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('relation');
-            $table->string('type');
+            $table->string('invoice_id');
+            $table->string('paymentMethod_id');
+            $table->string('value_id');
 
 
 
