@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('password')->nullable();
             $table->string('identifiers')->unique();
+            $table->foreignId('responsible')->nullable();
 
 
 

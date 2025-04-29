@@ -40,6 +40,7 @@ class UserController extends Controller
         try {
 			$user = User::create([
 				'name' => $request['name'],
+                'responsible' => $request['responsible'],
 				'identifiers' => $request['identifiers'],
                 'password' => $request['password'],
                 'identification_type' => $request['identification_type'],
@@ -104,7 +105,10 @@ class UserController extends Controller
 
 			$user->update([
 				'name' => $request['name'],
-				'value' => $request['value'],
+                'responsible' => $request['responsible'],
+				'identifiers' => $request['identifiers'],
+                'password' => $request['password'],
+                'identification_type' => $request['identification_type'],
 			]);
 
 

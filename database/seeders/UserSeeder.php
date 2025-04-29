@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
             //Tipos de identificacion
             [
                 'name'=> 'Admin',
+                'responsible' => 1,
                 'identifiers' => '10038077654',
                 'password' => Hash::make('12345'),
                 'identification_type_id' => 1,
@@ -28,22 +29,26 @@ class UserSeeder extends Seeder
                 'identifiers' => '1003810729',
                 'password' => null,
                 'identification_type_id' => 1,
+                'responsible' => 2,
             ],
             [
                 'name'=> 'David Bermeo',
                 'identifiers' => '1003807793',
                 'password' => null,
                 'identification_type_id' => 2,
+                'responsible' => 1,
             ],
             [
                 'name'=> 'Mona',
                 'identifiers' => '1003810777',
                 'password' => null,
                 'identification_type_id' => 2,
+                'responsible' => 2,
             ],
         ];
         foreach ($objetos as $key => $objeto){
             User::create([
+                'responsible' => $objeto['responsible'],
                 'name'=> $objeto['name'],
                 'identifiers' => $objeto['identifiers'],
                 'password' => $objeto['password'],
