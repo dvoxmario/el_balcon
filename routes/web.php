@@ -4,7 +4,11 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\IdentificationTypeController;
 use App\Http\Controllers\IncomeController;
+<<<<<<< HEAD
 use App\Http\Controllers\IncomeDetailController;
+=======
+use App\Http\Controllers\IncomeDetailDetailController;
+>>>>>>> ca326f29e5e41228c0443081214cebdfb2bdfc80
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\InvoiceDetailController;
 use App\Http\Controllers\InvoicePaymentController;
@@ -44,4 +48,8 @@ Route::apiResource('product', ProductController::class);
 Route::apiResource('stock', StockController::class);
 Route::apiResource('expense', ExpenseController::class);
 Route::apiResource('income', IncomeController::class);
+<<<<<<< HEAD
 Route::apiResource('income_detail', IncomeDetailController::class);
+=======
+Route::apiResource('incomeDetail', IncomeDetailDetailController::class);
+>>>>>>> ca326f29e5e41228c0443081214cebdfb2bdfc80
