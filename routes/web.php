@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\IdentificationTypeController;
+use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\InvoiceDetailController;
 use App\Http\Controllers\InvoicePaymentController;
@@ -41,3 +42,4 @@ Route::apiResource('category', CategoryController::class);
 Route::apiResource('product', ProductController::class);
 Route::apiResource('stock', StockController::class);
 Route::apiResource('expense', ExpenseController::class);
+Route::apiResource('income', IncomeController::class);

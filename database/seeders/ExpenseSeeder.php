@@ -19,7 +19,7 @@ class ExpenseSeeder extends Seeder
     
                 //Tipos de identificacion
                 [
-                    'stock_id'=> '7',
+                    'stock_id'=> '6',
                     'responsible_id' => '1',
                     'support' => 'mario',
                     
