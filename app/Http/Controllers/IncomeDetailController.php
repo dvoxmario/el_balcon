@@ -2,13 +2,7 @@
 
 namespace App\Http\Controllers;
 
-<<<<<<< HEAD
-use App\Models\income_detail;
 use App\Models\IncomeDetail;
-=======
-use App\Models\IncomeDetail;
-use Illuminate\Database\QueryException;
->>>>>>> ca326f29e5e41228c0443081214cebdfb2bdfc80
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
@@ -21,20 +15,10 @@ class IncomeDetailDetailController extends Controller
 
     ];
 
-<<<<<<< HEAD
-    public function index()
-     {
-        $query = IncomeDetail::query();
-
-        $this->response['data'] = $query->get();
-        return response()->json($this->response, 200);
-    }
-=======
 
     public function index()
     {
         $query = IncomeDetail::query();
->>>>>>> ca326f29e5e41228c0443081214cebdfb2bdfc80
 
 
         // Busqueda basica por nombre o identificador
@@ -57,33 +41,18 @@ class IncomeDetailDetailController extends Controller
     public function store(Request $request)
     {
         try {
-<<<<<<< HEAD
-			$income_detail = IncomeDetail::create([
-				'amount' => $request['amount'],
-                'price' => $request[ 'price'],
-				'income_id' => $request['income_id'],
-                'product_id' => $request ['product_id']
-                
-=======
 			$IncomeDetail = IncomeDetail::create([
 				'amount' => $request['amount'],
                 'price' => $request['price'],
                 'income_id' => $request['income_id'],
                 'product_id' => $request['product_id'],
->>>>>>> ca326f29e5e41228c0443081214cebdfb2bdfc80
 
 			]);
 
 
-<<<<<<< HEAD
-			if (!$income_detail) {
-				$this->response['status'] = 'error';
-                $this->response['message'] = 'no se Creo el detalle del ingreso';
-=======
 			if (!$IncomeDetail) {
 				$this->response['status'] = 'error';
                 $this->response['message'] = 'no se Creo el  detalle de ingreso';
->>>>>>> ca326f29e5e41228c0443081214cebdfb2bdfc80
                 return response()->json($this->response, 500);
 			}
 
@@ -91,11 +60,7 @@ class IncomeDetailDetailController extends Controller
 			return $this->response['message'] = $e->getMessage();
 		}
 
-<<<<<<< HEAD
-        $this->response['data'] = $income_detail;
-=======
         $this->response['data'] = $IncomeDetail;
->>>>>>> ca326f29e5e41228c0443081214cebdfb2bdfc80
 
         return response()->json($this->response, 200);
     }
@@ -105,17 +70,6 @@ class IncomeDetailDetailController extends Controller
      */
     public function show($id)
     {
-<<<<<<< HEAD
-        $income_detail = IncomeDetail::find($id);
-        if(!$income_detail)
-        {
-            $this->response['status'] = 'error';
-            $this->response['message'] = 'no se encontro el tipo de ingreso de detalle';
-            return response()->json($this->response, 400);
-        }
-
-        $this->response['data'] = $income_detail;
-=======
         $IncomeDetail = IncomeDetail::find($id);
     if(!$IncomeDetail)
         {
@@ -125,7 +79,6 @@ class IncomeDetailDetailController extends Controller
         }
 
         $this->response['data'] = $IncomeDetail;
->>>>>>> ca326f29e5e41228c0443081214cebdfb2bdfc80
         return response()->json($this->response, 200);
     }
 
