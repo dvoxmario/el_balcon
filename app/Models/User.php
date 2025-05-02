@@ -2,21 +2,20 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Foundation\Auth\User as Authenticatable; // Importa la clase correctamente
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use Notifiable;
 
     protected $table = 'users';
+
     /**
      * The attributes that are mass assignable.
      *
-     * @var list<string>
+     * @var array
      */
     protected $fillable = [
         'name',
@@ -30,55 +29,15 @@ class User extends Authenticatable
 
     ];
 
-    //relaciones
+    // Métodos necesarios para JWTSubject
 
-    function identificationTypes() {
-        return $this->belongsTo(IdentificationType::class);
-    }
-    
-
-    public function userRols()
+    public function getJWTIdentifier()
     {
-        return $this->hasMany(UserRol::class);
+        return $this->getKey(); // Devuelve la clave primaria del usuario
     }
 
-    public function reservations()
+    public function getJWTCustomClaims()
     {
-        return $this->hasMany(Reservation::class);
-    }
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-
-
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return [];  // Aquí puedes agregar información adicional si lo deseas
     }
 }
