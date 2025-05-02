@@ -2,22 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\income_detail;
+use App\Models\IncomeDetail;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
-class IncomeDetailController extends Controller
+class IncomeDetailDetailController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    private $response = [
+        'status' => 'ok',
+        'message' => 'null',
+        'data' => []
+
+    ];
+
+
     public function index()
     {
-        //
-    }
+        $query = IncomeDetail::query();
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
+        // Busqueda basica por nombre o identificador
+        // if ($request->has('search') && $request->search !='') {
+        //     $query->where('name', 'like', '%' . $request->search . '%')
+        //         ->orwhere('identifiers','like', '%' . $request->search . '%');
+
+        // }
+        $this->response['data'] = $query->get();
+        return response()->json($this->response, 200);
+    }
     public function create()
     {
         //
@@ -28,21 +40,52 @@ class IncomeDetailController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+			$IncomeDetail = IncomeDetail::create([
+				'amount' => $request['amount'],
+                'price' => $request['price'],
+                'income_id' => $request['income_id'],
+                'product_id' => $request['product_id'],
+
+			]);
+
+
+			if (!$IncomeDetail) {
+				$this->response['status'] = 'error';
+                $this->response['message'] = 'no se Creo el  detalle de ingreso';
+                return response()->json($this->response, 500);
+			}
+
+		} catch (QueryException $e) {
+			return $this->response['message'] = $e->getMessage();
+		}
+
+        $this->response['data'] = $IncomeDetail;
+
+        return response()->json($this->response, 200);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(income_detail $income_detail)
+    public function show($id)
     {
-        //
+        $IncomeDetail = IncomeDetail::find($id);
+    if(!$IncomeDetail)
+        {
+            $this->response['status'] = 'error';
+            $this->response['message'] = 'no se encontro el detalle de ingreso';
+            return response()->json($this->response, 400);
+        }
+
+        $this->response['data'] = $IncomeDetail;
+        return response()->json($this->response, 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(income_detail $income_detail)
+    public function edit(IncomeDetail $IncomeDetail)
     {
         //
     }
@@ -50,16 +93,57 @@ class IncomeDetailController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, income_detail $income_detail)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+
+            $IncomeDetail = IncomeDetail::find($id);
+
+            if (!$IncomeDetail) {
+                $this->response['status'] = 'error';
+                $this->response['message'] = 'no se encontro el detalle de ingreso';
+                return response()->json($this->response, 400);
+            }
+
+			$IncomeDetail->update([
+				'amount' => $request['amount'],
+                'price' => $request['price'],
+                'income_id' => $request['income_id'],
+                'product_id' => $request['product_id'],
+			]);
+
+
+		} catch (QueryException $e) {
+			return $this->response['message'] = $e->getMessage();
+		}
+
+        $this->response['data'] = $IncomeDetail;
+
+        return response()->json($this->response, 200);
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(income_detail $income_detail)
+    public function destroy($id)
     {
-        //
+        $IncomeDetail = IncomeDetail::find($id);
+
+        if(!$IncomeDetail){
+            $this->response['status'] = 'error';
+            $this->response['message'] = 'No se ha encontrado el detalle de ingreso';
+            return response()->json($this->response, 400);
+        }
+
+        if($IncomeDetail->delete()){
+            $this->response['data'] = $IncomeDetail;
+            return response()->json($this->response, 200);
+        }
+        else{
+            $this->response['status'] = 'error';
+            $this->response['message'] = 'No se ha eliminado el detalle de ingreso';
+            return response()->json($this->response, 400);
+        }
     }
 }
