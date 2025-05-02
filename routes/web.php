@@ -48,8 +48,4 @@ Route::apiResource('product', ProductController::class);
 Route::apiResource('stock', StockController::class);
 Route::apiResource('expense', ExpenseController::class);
 Route::apiResource('income', IncomeController::class);
-<<<<<<< HEAD
-Route::apiResource('income_detail', IncomeDetailController::class);
-=======
 Route::apiResource('incomeDetail', IncomeDetailDetailController::class);
->>>>>>> ca326f29e5e41228c0443081214cebdfb2bdfc80
